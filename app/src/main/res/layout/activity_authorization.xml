@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
+    
+    <data>
+        <variable
+            name="authModel"
+            type="com.example.coursework2.viewmodel.AuthorizationViewModel" />
+    </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,7 +13,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/gradient_background"
-    tools:context=".MainActivity">
+    tools:context=".UI.saveditems.MainActivity">
+
 
     <LinearLayout
         android:id="@+id/container_em_pas"
@@ -29,6 +37,7 @@
 
             <EditText
                 android:id="@+id/login"
+                android:text="@={authModel.login}"
                 android:layout_width="280dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -69,6 +78,7 @@
 
             <EditText
                 android:id="@+id/password"
+                android:text="@={authModel.password}"
                 android:layout_width="280dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="10dp"
@@ -117,6 +127,7 @@
 
         <Button
             android:id="@+id/login_btn"
+            android:onClick="@{()-> authModel.authorizeUserClicked()}"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
@@ -139,3 +150,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

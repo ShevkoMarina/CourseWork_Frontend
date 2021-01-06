@@ -1,8 +1,10 @@
-package com.example.coursework2;
+package com.example.coursework2.UI.saveditems;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.coursework2.R;
 
 public class MainActivity extends AppCompatActivity {
 
