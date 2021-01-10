@@ -16,8 +16,6 @@ import com.example.coursework2.viewmodel.AuthorizationViewModelFactory;
 
 public class AuthorizationActivity extends AppCompatActivity {
 
-    private AuthorizationViewModel authorizationViewModel;
-
     private EditText mLogin;
     private EditText mPassword;
     private Button mSignUpButton;
@@ -28,15 +26,8 @@ public class AuthorizationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authorization);
         ActivityAuthorizationBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_authorization);
-        authorizationViewModel = ViewModelProviders.of(this, new AuthorizationViewModelFactory(this, new User())).get(AuthorizationViewModel.class);
+        AuthorizationViewModel authorizationViewModel = ViewModelProviders.of(this, new AuthorizationViewModelFactory(this, new User())).get(AuthorizationViewModel.class);
         binding.setAuthModel(authorizationViewModel);
-    }
 
-    /*
-    @Override
-    protected Fragment getFragment() {
-        return AuthorizationFragment.newInstance() ;
     }
-
-     */
 }

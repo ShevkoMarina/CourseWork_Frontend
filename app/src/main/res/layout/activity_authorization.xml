@@ -12,8 +12,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/gradient_background"
-    tools:context=".UI.saveditems.MainActivity">
+    android:background="@drawable/gradient_background">
 
 
     <LinearLayout
@@ -138,6 +137,7 @@
 
         <Button
             android:id="@+id/sign_btn"
+            android:onClick="@{()-> authModel.registerUserClicked()}"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginTop="5dp"

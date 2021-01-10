@@ -1,14 +1,27 @@
 package com.example.coursework2.model;
-
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+    // убрала expose
     @SerializedName("login")
-    @Expose
-    public String login;
+    private String login;
 
     @SerializedName("password")
-    @Expose
-    public String password;
+    private String password;
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
