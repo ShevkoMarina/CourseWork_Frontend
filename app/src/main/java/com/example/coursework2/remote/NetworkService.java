@@ -8,7 +8,11 @@ public class NetworkService {
     private static final String BASE_URL = "https://courseworkapi.azurewebsites.net/";
     private static Retrofit retrofit;
 
-    private static Retrofit getRetroClient() {
+    public static Retrofit getRetrofit() {
+        return retrofit;
+    }
+
+    static Retrofit getRetroClient() {
 
         if (retrofit == null) {
        //  Gson gson = new GsonBuilder().setLenient().create();

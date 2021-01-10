@@ -1,4 +1,5 @@
 package com.example.coursework2.viewmodel;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -6,7 +7,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.coursework2.model.User;
+import com.example.coursework2.remote.APIError;
 import com.example.coursework2.remote.APIService;
+import com.example.coursework2.remote.ErrorUtils;
 import com.example.coursework2.remote.NetworkService;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,6 +22,7 @@ public class AuthorizationViewModel extends ViewModel {
 
     public User user;
     // потом убрать
+    @SuppressLint("StaticFieldLeak")
     private Context context;
 
     public AuthorizationViewModel(Context context, User user) {
@@ -36,11 +40,12 @@ public class AuthorizationViewModel extends ViewModel {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                if (response.code() == 400 && response.body().equals("Wrong password")) {
-                    Toast.makeText(context, response.body().toString(), Toast.LENGTH_LONG).show();
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, "Sucessful", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(context, "Sucessful", Toast.LENGTH_LONG).show();
+                    APIError error = ErrorUtils.parseError(response);
+                    Toast.makeText(context, error.getTitle(), Toast.LENGTH_LONG).show();
                 }
             }
 
