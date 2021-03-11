@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.coursework2.UI.Authorization.AuthorizationActivity;
+import com.example.coursework2.UI.authorization.AuthorizationActivity;
 import com.example.coursework2.model.User;
 
 public class AuthorizationViewModelFactory implements ViewModelProvider.Factory {

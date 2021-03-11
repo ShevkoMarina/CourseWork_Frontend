@@ -17,6 +17,9 @@ import retrofit2.Response;
 
 public class AuthorizationViewModel extends ViewModel {
 
+    // если понадобится context - спользуй androidviewmodel
+    // вроде их незачем делать ливдатой - мы подписываемся на нее и когда она изменяется об этом уведоляется вью
+    // - делать приватными и добавитб геттеры. там может бытьметод
     public MutableLiveData<String> login = new MutableLiveData<>();
     public MutableLiveData<String> password = new MutableLiveData<>();
 
@@ -30,6 +33,7 @@ public class AuthorizationViewModel extends ViewModel {
         this.context = context;
     }
 
+    // убрать из логина возможность сделать вниз нессколько строк
     public void authorizeUserClicked() {
 
         user.setLogin(login.getValue());
@@ -46,6 +50,7 @@ public class AuthorizationViewModel extends ViewModel {
                 else {
                     APIError error = ErrorUtils.parseError(response);
                     Toast.makeText(context, error.getTitle(), Toast.LENGTH_LONG).show();
+                    login.postValue(null);
                 }
             }
 
@@ -56,6 +61,8 @@ public class AuthorizationViewModel extends ViewModel {
         });
     }
 
+    // нельзя регистрировать с таким же логином
+    // в первый раз делает ошибку
     public void registerUserClicked() {
         user.setLogin(login.getValue());
         user.setPassword(password.getValue());
