@@ -1,7 +1,9 @@
 package com.example.coursework2.remote;
 
+import com.example.coursework2.model.FindSimilarRequest;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizeImage;
+import com.example.coursework2.model.RecognizedItem;
 import com.example.coursework2.model.User;
 
 import java.util.List;
@@ -30,11 +32,6 @@ public interface APIService {
     @POST("/users/AddUser")
     Call<String> registerUser(@Body User user);
 
-    @Multipart
-    @POST("/SavedItems/RecognizeItem")
-    Call<String> addUserImage(@Part MultipartBody.Part file,
-                              @Part("id") RequestBody id);
-
     @Headers("Content-type: application/json")
     @POST("/SavedItems/FindByUrl")
     Call<String> findByUrl(@Body RecognizeImage image);
@@ -47,4 +44,12 @@ public interface APIService {
     @Headers("Content-type: application/json")
     @GET("/SavedItems/{id}")
     Call<List<Item>> getUserItems(@Path("id") UUID id);
+
+    @Headers("Content-type: application/json")
+    @GET("/SavedItems/MakePrediction")
+    Call<List<RecognizedItem>> makePrediction(@Query("url") String photoUrl);
+
+    @Headers("Content-type: application/json")
+    @POST("/SavedItems/FindSimilarByUrl")
+    Call<List<Item>> findSimilar(@Body FindSimilarRequest request);
 }

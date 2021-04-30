@@ -1,18 +1,20 @@
-package com.example.coursework2.UI.Items;
+package com.example.coursework2.UI.saved_items;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coursework2.R;
+import com.example.coursework2.UI.getphoto.GetPhotoActivity;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.viewmodel.ItemsListViewModel;
+import com.example.coursework2.viewmodel.ItemsListViewModelFactory;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -21,10 +23,12 @@ import java.util.UUID;
 
 public class ItemsListActivity extends AppCompatActivity implements OnFurnitureListener{
 
+    Button recognizeBtn;
     // Recycler view
     private RecyclerView recyclerView;
     private FurnitureRecyclerView adapter;
-
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
 
     // ViewModel
     private ItemsListViewModel itemsListViewModel;
@@ -34,14 +38,25 @@ public class ItemsListActivity extends AppCompatActivity implements OnFurnitureL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items);
 
-        itemsListViewModel = new ViewModelProvider(this).get(ItemsListViewModel.class);
+        itemsListViewModel = new ViewModelProvider(this, new ItemsListViewModelFactory(this)).get(ItemsListViewModel.class);
         recyclerView = findViewById(R.id.furniture_recycler_view);
+        recognizeBtn = findViewById(R.id.recognitionBtn);
 
         // Calling the observers
         ObserveAnyChange();
         ConfigureRecyclerView();
-        searchItemApi(UUID.fromString("3e5cd440-a499-4ac7-7f8c-08d8b8a6af56"));
 
+        sp = getSharedPreferences("UserData", MODE_PRIVATE);
+        String userId = sp.getString("userid", "");
+        getUserItems(UUID.fromString(userId));
+
+        recognizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ItemsListActivity.this, GetPhotoActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     // Observing any data change
@@ -60,8 +75,8 @@ public class ItemsListActivity extends AppCompatActivity implements OnFurnitureL
     }
 
     // Calling method in Activity
-    private void searchItemApi(UUID id) {
-        itemsListViewModel.searchItemApi(id);
+    private void getUserItems(UUID id) {
+        itemsListViewModel.getUserItems(id);
     }
 
     // Init recycler view & adding data to it

@@ -1,4 +1,4 @@
-package com.example.coursework2.UI.Items;
+package com.example.coursework2.UI.saved_items;
 
 public interface OnFurnitureListener {
 
