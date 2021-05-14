@@ -1,13 +1,20 @@
 package com.example.coursework2.UI.authorization;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.coursework2.UI.category_items.CategoryItemsActivity;
 import com.example.coursework2.UI.saved_items.ItemsListActivity;
+import com.example.coursework2.UI.saved_items_clicked.SavedItemsActivity;
 import com.example.coursework2.model.User;
 import com.example.coursework2.R;
 import com.example.coursework2.databinding.ActivityAuthorizationBinding;
@@ -37,7 +44,8 @@ public class AuthorizationActivity extends AppCompatActivity {
     }
 
     private void openUsersSavedItemsPage() {
-        Intent intent = new Intent(AuthorizationActivity.this, ItemsListActivity.class);
+       // Intent intent = new Intent(AuthorizationActivity.this, ItemsListActivity.class);
+        Intent intent = new Intent(AuthorizationActivity.this, CategoryItemsActivity.class);
         startActivity(intent);
     }
 }

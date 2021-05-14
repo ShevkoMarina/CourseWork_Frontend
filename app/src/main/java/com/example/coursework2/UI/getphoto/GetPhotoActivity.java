@@ -1,5 +1,7 @@
 package com.example.coursework2.UI.getphoto;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -12,12 +14,18 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.coursework2.R;
 import com.example.coursework2.UI.recognition.RecognitionActivity;
 import com.example.coursework2.viewmodel.GetPhotoViewModel;
@@ -49,6 +57,7 @@ public class GetPhotoActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
 
         imageView = (ImageView) findViewById(R.id.imagefromcamera);
+        imageView.setImageResource(R.drawable.upload_image);
 
         getPhotoViewModel.getBlobUrl().observe(this, new Observer<String>() {
             @Override
@@ -66,31 +75,58 @@ public class GetPhotoActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+        // Camera
         if (requestCode == 2 && resultCode == Activity.RESULT_OK) {
 
-            Bitmap photo = (Bitmap) Objects.requireNonNull(data.getExtras()).get("data");
-            // вот тут надо вью модель
-            imageView.setImageBitmap(photo);
-            String filePath = getPhotoViewModel.saveImage(compressPhoto(photo));
-            Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
+            Glide.with(this)
+                    .asBitmap()
+                    .load(getPhotoViewModel.getFilePath())
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            imageView.setImageBitmap(resource);
+                            Bitmap compressedBitmap = compressPhoto(resource);
+                            getPhotoViewModel.saveImage(compressedBitmap);
+                        }
 
-        } else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
 
-            final InputStream imageStream;
-            try {
-                imageStream = getContentResolver().openInputStream(Objects.requireNonNull(data.getData()));
-
-            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            imageView.setImageBitmap(selectedImage);
-            Bitmap compressedBitmap = compressPhoto(selectedImage);
-            String filePath = getPhotoViewModel.saveImage(compressedBitmap);
-            Toast.makeText(this, filePath, Toast.LENGTH_LONG).show();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            //onSelectFromGalleryResult(data);
+                        }
+                    });
+            // Gallery
         }
+        else if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+             imageView.setImageURI(data.getData());
+             getPhotoFromGallery(data.getData());
+
+        }
+    }
+
+
+
+    private void getPhotoFromGallery(Uri uri) {
+        Glide.with(this)
+                .asBitmap()
+                .load(uri)
+                .into(new CustomTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap selectedImage, @Nullable Transition<? super Bitmap> transition) {
+                        Bitmap compressedBitmap = compressPhoto(selectedImage);
+                        getPhotoViewModel.saveImage(compressedBitmap);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
+    }
+
+    private Bitmap rotateBitmap(Bitmap sourceBitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90);
+        return Bitmap.createBitmap(sourceBitmap, 0, 0, sourceBitmap.getWidth(), sourceBitmap.getHeight(), matrix, true);
     }
 
 
@@ -101,13 +137,6 @@ public class GetPhotoActivity extends AppCompatActivity {
 
     private Bitmap compressPhoto(Bitmap photo) {
            Bitmap scaledBitmap = Bitmap.createScaledBitmap(photo, (int)(photo.getWidth() * 0.3), (int)(photo.getHeight() * 0.3), true);
-           if (photo.getWidth() > photo.getHeight()) {
-               Matrix matrix = new Matrix();
-               matrix.postRotate(90);
-               Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
-               imageView.setRotation(90);
-               return rotatedBitmap;
-           }
            return scaledBitmap;
     }
 

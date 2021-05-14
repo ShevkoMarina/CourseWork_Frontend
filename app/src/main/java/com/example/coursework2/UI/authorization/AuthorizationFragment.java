@@ -22,9 +22,6 @@ public class AuthorizationFragment extends Fragment {
     private Button mSignUpButton;
     private Button mLogInButton;
 
-    // todo: отом убрать отсбда
-    private static final String SERVER_URL = "https://courseworkapi.azurewebsites.net/";
-
     public static AuthorizationFragment newInstance() {
         Bundle args = new Bundle();
         AuthorizationFragment fragment = new AuthorizationFragment();

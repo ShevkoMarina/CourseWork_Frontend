@@ -10,17 +10,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/furniture_item_card"
         android:layout_width="180dp"
-        android:layout_height="180dp"
+        android:layout_height="260dp"
         app:cardCornerRadius="25dp"
         tools:layout_editor_absoluteX="1dp">
-
-        <CheckBox
-            android:id="@+id/similar_check_box"
-            android:elevation="20dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:button="@drawable/custom_checkbox"
-            android:layout_gravity="right" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,41 +20,34 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/furniture_image"
+                android:id="@+id/saved_image"
                 android:layout_width="match_parent"
-                android:layout_height="135dp"
-                android:scaleType="center"
+                android:layout_height="215dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background" />
 
             <TextView
-                android:id="@+id/furniture_name"
+                android:id="@+id/saved_name"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:gravity="center"
+                android:textColor="@android:color/black"
                 android:text="Name"
+                android:fontFamily="sans-serif-thin"
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/furniture_price"
+                android:id="@+id/saved_price"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="bottom"
                 android:gravity="center"
+                android:textColor="@android:color/black"
                 android:text="Name"
+                android:fontFamily="sans-serif-thin"
                 android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/furniture_webUrl"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="bottom"
-                android:gravity="center"
-                android:text="Name"
-                android:textSize="16dp" />
-
 
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

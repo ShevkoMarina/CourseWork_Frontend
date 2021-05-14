@@ -41,4 +41,6 @@ public class RecognizedItemsViewModel extends ViewModel {
         Intent intent = new Intent(activity, SimilarItemsActivity.class);
         activity.startActivity(intent);
     }
+
+
 }

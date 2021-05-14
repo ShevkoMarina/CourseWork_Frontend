@@ -27,14 +27,13 @@ public class FurnitureRecyclerView extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.furniture_list_item,
                 parent, false);
-        return new FurnitureViewHolder(view, onFurnitureListener);
+        return new FurnitureViewHolder(view, onFurnitureListener, this);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         ((FurnitureViewHolder)holder).nameTV.setText(mFurnitureItems.get(i).getName());
         ((FurnitureViewHolder)holder).priceTV.setText(mFurnitureItems.get(i).getPrice());
-        ((FurnitureViewHolder)holder).imageTV.setText(mFurnitureItems.get(i).getImageUrl());
         ((FurnitureViewHolder)holder).webTV.setText(mFurnitureItems.get(i).getWebUrl());
 
         // ImageView
@@ -54,5 +53,9 @@ public class FurnitureRecyclerView extends RecyclerView.Adapter<RecyclerView.Vie
     public void setmFurnitureItems(List<Item> mFurnitureItems) {
         this.mFurnitureItems = mFurnitureItems;
         notifyDataSetChanged();
+    }
+
+    public List<Item> getmFurnitureItems() {
+        return mFurnitureItems;
     }
 }

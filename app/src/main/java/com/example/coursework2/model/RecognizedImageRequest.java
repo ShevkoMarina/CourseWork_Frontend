@@ -2,16 +2,16 @@ package com.example.coursework2.model;
 
 public class RecognizedImageRequest {
 
-    private String UserId;
+    private String Category;
     private String ImageUri;
 
-    public RecognizedImageRequest(String userId, String imageUri) {
-        UserId = userId;
+    public RecognizedImageRequest(String category, String imageUri) {
+        Category = category;
         ImageUri = imageUri;
     }
 
-    public String getUserId() {
-        return UserId;
+    public String getCategory() {
+        return Category;
     }
 
     public String getImageUri() {

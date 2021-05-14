@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.coursework2.model.CategoryItem;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizedImageRequest;
 import com.example.coursework2.model.RecognizedItem;
@@ -35,9 +37,12 @@ public class ItemsListViewModel extends ViewModel {
 
     public LiveData<List<Item>> getSimilarItems() { return itemRepository.getSimilarItems();}
 
+    public LiveData<List<CategoryItem>> getCategoryItems() {return itemRepository.getCategoryItems(); }
+
     // Calling method in view model
-    public void getUserItems(UUID userId) {
-        itemRepository.getUserItems(userId);
+    public void getUserItems(UUID userId, String category) {
+        //itemRepository.getUserItems(userId);
+        itemRepository.getItemsByCategory(userId, category);
     }
 
     public void getSimilarItems(List<RecognizedItem> croppedImages) {
@@ -46,9 +51,20 @@ public class ItemsListViewModel extends ViewModel {
 
         Collection<RecognizedImageRequest> items = new ArrayList<>();
         for (int i = 0; i < croppedImages.size(); i++)  {
-            items.add(new RecognizedImageRequest(userId, croppedImages.get(i).getUrl()));
+            items.add(new RecognizedImageRequest(croppedImages.get(i).getName(), croppedImages.get(i).getUrl()));
         }
 
-        itemRepository.getSimilarItems(items);
+        itemRepository.getSimilarItems(items, userId);
     }
+
+    public void saveCheckedItems(List<Item> checkedItems) {
+        itemRepository.saveCheckedItems(checkedItems);
+    }
+
+    public void getCategories() {
+        sp = activity.getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userId = sp.getString("userid", "");
+        itemRepository.getCategories(UUID.fromString(userId));
+    }
+
 }

@@ -7,13 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.example.coursework2.R;
-import com.example.coursework2.UI.getphoto.GetPhotoActivity;
-import com.example.coursework2.UI.saved_items.FurnitureRecyclerView;
-import com.example.coursework2.UI.simular_items.SimilarItemsActivity;
 import com.example.coursework2.databinding.ActivityRecognitzingBinding;
 import com.example.coursework2.model.RecognizedItem;
 import com.example.coursework2.viewmodel.RecognizedItemsViewModel;
@@ -27,6 +25,7 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
     private RecognizedItemsViewModel recognizedItemsViewModel;
     private RecognizedItemsAdapter adapter;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +36,7 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
         binding.setRecognitionmodel(recognizedItemsViewModel);
         binding.setLifecycleOwner(this);
         recyclerView = findViewById(R.id.recognizedItems);
+        progressBar = findViewById(R.id.rec_progress_bar);
 
         // Observers
         recognizedItemsViewModel.getItems().observe(this, new Observer<List<RecognizedItem>>() {
@@ -44,10 +44,12 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
             public void onChanged(List<RecognizedItem> recognizedItems) {
                 if (recognizedItems != null) {
                     adapter.setRecognizedItems(recognizedItems);
+                    progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
         ConfigureRecyclerView();
+        progressBar.setVisibility(View.VISIBLE);
         recognizedItemsViewModel.getRecognizedItems();
     }
 
@@ -69,5 +71,9 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
 
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        recyclerView.setItemViewCacheSize(0);
+    }
 }

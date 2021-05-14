@@ -1,9 +1,11 @@
 package com.example.coursework2.remote;
 
+import com.example.coursework2.model.CategoryItem;
 import com.example.coursework2.model.FindSimilarRequest;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizeImage;
 import com.example.coursework2.model.RecognizedItem;
+import com.example.coursework2.model.SaveItemsRequest;
 import com.example.coursework2.model.User;
 
 import java.util.List;
@@ -52,4 +54,16 @@ public interface APIService {
     @Headers("Content-type: application/json")
     @POST("/SavedItems/FindSimilarByUrl")
     Call<List<Item>> findSimilar(@Body FindSimilarRequest request);
+
+    @Headers("Content-type: application/json")
+    @POST("/SavedItems/SaveItems")
+    Call<Void> saveItems(@Body List<Item> request);
+
+    @Headers("Content-type: application/json")
+    @GET("/SavedItems/GetUserCategories")
+    Call<List<CategoryItem>> getCategories(@Query("guid") UUID userId);
+
+    @Headers("Content-type: application/json")
+    @GET("/SavedItems/GetUserItemsByCategory")
+    Call<List<Item>> getUserItemsByCategory(@Query("userId") UUID userId, @Query("category") String category);
 }

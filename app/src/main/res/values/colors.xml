@@ -5,4 +5,6 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="colorPink">#d8c2ff</color>
     <color name="colorTintedPink">#b88fff</color>
+    <color name="trans_pink">#D9b88fff</color>
+    <color name="trans_white">#AAFFFFFF</color>
 </resources>

@@ -14,8 +14,10 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".UI.simular_items.SimilarItemsActivity"></activity>
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <activity android:name=".UI.category_items.CategoryItemsActivity"></activity>
+        <activity android:name=".UI.saved_items_clicked.SavedItemsActivity" />
+        <activity android:name=".UI.simular_items.SimilarItemsActivity" />
         <activity android:name=".UI.recognition.RecognitionActivity" />
         <activity android:name=".UI.saved_items.ItemsListActivity" />
         <activity
@@ -28,6 +30,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".UI.getphoto.GetPhotoActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.coursework2.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

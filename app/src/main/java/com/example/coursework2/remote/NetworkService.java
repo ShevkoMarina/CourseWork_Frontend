@@ -13,19 +13,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NetworkService {
 
-    private static final String BASE_URL = "https://coursebackapiserver.azurewebsites.net/";
+    private static final String BASE_URL = "https://coursebackapi.azurewebsites.net/";
     private static Retrofit retrofit;
 
     public static Retrofit getRetrofit() {
         return retrofit;
     }
 
+    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(50, TimeUnit.SECONDS)
+            .readTimeout(60,TimeUnit.SECONDS)
+            .build();
+
     static Retrofit getRetroClient() {
 
         if (retrofit == null) {
             Gson gson = new GsonBuilder().setLenient().create();
             retrofit =  new Retrofit.Builder()
-                 .baseUrl(BASE_URL)
+                 .baseUrl(BASE_URL).client(okHttpClient)
                  .addConverterFactory(GsonConverterFactory.create(gson))
                  .build();
         }

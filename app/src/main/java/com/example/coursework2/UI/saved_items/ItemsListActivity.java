@@ -1,6 +1,7 @@
 package com.example.coursework2.UI.saved_items;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +34,8 @@ public class ItemsListActivity extends AppCompatActivity implements OnFurnitureL
 
     // ViewModel
     private ItemsListViewModel itemsListViewModel;
+
+    private List<Item> savedItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +71,7 @@ public class ItemsListActivity extends AppCompatActivity implements OnFurnitureL
             public void onChanged(List<Item> items) {
                 // Observing for any data change
                 if (items != null) {
-                        // Get the data &&&&&&&
+                        // Get the data
                        adapter.setmFurnitureItems(items);
                 }
             }
@@ -76,20 +80,35 @@ public class ItemsListActivity extends AppCompatActivity implements OnFurnitureL
 
     // Calling method in Activity
     private void getUserItems(UUID id) {
-        itemsListViewModel.getUserItems(id);
+        //itemsListViewModel.getUserItems(id);
     }
 
     // Init recycler view & adding data to it
     private void ConfigureRecyclerView() {
         // Liva data can't be passed via the constructor
-        adapter = new FurnitureRecyclerView(this);
+        adapter = new FurnitureRecyclerView(new OnFurnitureListener() {
+            @Override
+            public void onFurnitureClick(View v, int position) {
 
+            }
+
+            @Override
+            public void onWebClick(int position) {
+
+            }
+        });
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @Override
-    public void onFurnitureClick(int position) {
+    protected void onPause() {
+        super.onPause();
+        recyclerView.setItemViewCacheSize(0);
+    }
+
+    @Override
+    public void onFurnitureClick(View v, int position) {
 
     }
 

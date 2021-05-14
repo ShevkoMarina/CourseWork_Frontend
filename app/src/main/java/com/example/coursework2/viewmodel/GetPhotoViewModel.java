@@ -9,11 +9,13 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.FileProvider;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -42,6 +44,10 @@ public class GetPhotoViewModel extends ViewModel {
     private String filePath;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
+
+    public String getFilePath() {
+        return filePath;
+    }
 
     public LiveData<String> getBlobUrl() {
         return recognitionRepository.getBlobUrl();
@@ -86,12 +92,27 @@ public class GetPhotoViewModel extends ViewModel {
 
         activity.startActivityForResult(galleryIntent, GALLERY);
 
-    //    Intent intent = new Intent(activity, ActivityGallery.class).putExtra()
     }
 
     private void takePhotoFromCamera() {
+        /*
         Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         activity.startActivityForResult(intent, CAMERA);
+
+         */
+     try
+     {
+         String fileName = "photo";
+         File storageDirectory = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+         File imageFile = File.createTempFile(fileName, ".jpg", storageDirectory);
+         filePath = imageFile.getAbsolutePath();
+
+         Uri imageUri = FileProvider.getUriForFile(activity, "com.example.coursework2.fileprovider", imageFile);
+         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+         activity.startActivityForResult(intent, CAMERA);
+     }
+     catch (Exception ex) { }
     }
 
     public String saveImage(Bitmap myBitmap) {
