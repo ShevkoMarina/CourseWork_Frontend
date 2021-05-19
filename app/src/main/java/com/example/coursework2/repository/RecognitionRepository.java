@@ -41,8 +41,8 @@ public class RecognitionRepository {
         return croppedItems;
     }
 
-    public void getCroppedImages(String photoUrl) {
-        Call<List<RecognizedItem>> call = NetworkService.getAPIService().makePrediction(photoUrl);
+    public void getCroppedImages(String photoUrl, String token) {
+        Call<List<RecognizedItem>> call = NetworkService.getAPIWithTokenService(token).makePrediction(photoUrl);
         call.enqueue(new Callback<List<RecognizedItem>>() {
             @Override
             public void onResponse(Call<List<RecognizedItem>> call, Response<List<RecognizedItem>> response) {
@@ -55,14 +55,14 @@ public class RecognitionRepository {
 
             @Override
             public void onFailure(Call<List<RecognizedItem>> call, Throwable t) {
-
+                croppedItems.postValue(null);
             }
         });
 
     }
 
-    public void uploadPhotoToBlob(File file, String userId) {
-        APIService apiService = NetworkService.getAPIService();
+    public void uploadPhotoToBlob(File file, String userId, String token) {
+        APIService apiService = NetworkService.getAPIWithTokenService(token);
         RequestBody requestUserId = RequestBody.create(MediaType.parse("text/plain"), userId);
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 

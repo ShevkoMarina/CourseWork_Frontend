@@ -7,11 +7,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.coursework2.R;
+import com.example.coursework2.UI.simular_items.SimilarItemsActivity;
 import com.example.coursework2.databinding.ActivityRecognitzingBinding;
 import com.example.coursework2.model.RecognizedItem;
 import com.example.coursework2.viewmodel.RecognizedItemsViewModel;
@@ -21,30 +26,48 @@ import java.util.List;
 
 public class RecognitionActivity extends AppCompatActivity  implements OnRecognitionListener{
 
-    // ViewModel
-    private RecognizedItemsViewModel recognizedItemsViewModel;
     private RecognizedItemsAdapter adapter;
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private Button continueBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recognitzing);
-        ActivityRecognitzingBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_recognitzing);
-        recognizedItemsViewModel = new ViewModelProvider(this, new RecognizedItemsViewModelFactory(this)).get(RecognizedItemsViewModel.class);
-        binding.setRecognitionmodel(recognizedItemsViewModel);
-        binding.setLifecycleOwner(this);
+        RecognizedItemsViewModel recognizedItemsViewModel = new ViewModelProvider(this, new RecognizedItemsViewModelFactory(this)).get(RecognizedItemsViewModel.class);
         recyclerView = findViewById(R.id.recognizedItems);
         progressBar = findViewById(R.id.rec_progress_bar);
+        TextView nothingRecognizedTV = findViewById(R.id.nothing_rec_tv);
+        continueBtn = findViewById(R.id.continueBtn);
+        continueBtn.setEnabled(false);
+
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSimilarItemsPage();
+            }
+        });
 
         // Observers
         recognizedItemsViewModel.getItems().observe(this, new Observer<List<RecognizedItem>>() {
             @Override
             public void onChanged(List<RecognizedItem> recognizedItems) {
                 if (recognizedItems != null) {
-                    adapter.setRecognizedItems(recognizedItems);
+                    continueBtn.setText("Продолжить");
                     progressBar.setVisibility(View.INVISIBLE);
+                    if (recognizedItems.size() != 0) {
+                        nothingRecognizedTV.setVisibility(View.INVISIBLE);
+                        adapter.setRecognizedItems(recognizedItems);
+                        continueBtn.setEnabled(true);
+                    }
+                    else {
+                        nothingRecognizedTV.setVisibility(View.VISIBLE);
+                        continueBtn.setText("Назад");
+                    }
+                } else {
+                    nothingRecognizedTV.setVisibility(View.VISIBLE);
+                    continueBtn.setText("Назад");
                 }
             }
         });
@@ -53,12 +76,21 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
         recognizedItemsViewModel.getRecognizedItems();
     }
 
-    // Init recycler view & adding data to it
     private void ConfigureRecyclerView() {
-        // Liva data can't be passed via the constructor
         adapter = new RecognizedItemsAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+    }
+
+    public void openSimilarItemsPage() {
+        if (continueBtn.getText() == "Назад") {
+            finish();
+            // Или поставиь переход на новую страницу для загрузки
+        }
+        else {
+            Intent intent = new Intent(RecognitionActivity.this, SimilarItemsActivity.class);
+            this.startActivity(intent);
+        }
     }
 
     @Override
@@ -69,11 +101,5 @@ public class RecognitionActivity extends AppCompatActivity  implements OnRecogni
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        recyclerView.setItemViewCacheSize(0);
     }
 }

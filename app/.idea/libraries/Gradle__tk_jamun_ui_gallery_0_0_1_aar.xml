@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: tk.jamun.ui:gallery:0.0.1@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tk.jamun.ui/gallery/0.0.1/2b3680ca02c87141d59f04529ac45212d2199bab/gallery-0.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tk.jamun.ui/gallery/0.0.1/2c7bc7ee15c7015b3de7257aef574db5e6b561c4/gallery-0.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

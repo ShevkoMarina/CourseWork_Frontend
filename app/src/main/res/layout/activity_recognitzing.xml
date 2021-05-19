@@ -22,7 +22,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
+    <TextView
+        android:id="@+id/nothing_rec_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ничего не распознано"
+        android:visibility="invisible"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="100dp"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent" />
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -30,6 +42,17 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+
+        <TextView
+            android:id="@+id/textView2"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Распознанные предметы" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recognizedItems"
@@ -40,12 +63,14 @@
 
         <Button
             android:id="@+id/continueBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:onClick="@{()-> recognitionmodel.openSimilarItemsPage()}"
+            android:background="@drawable/rounded_filled_btn"
             android:text="Продолжить" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

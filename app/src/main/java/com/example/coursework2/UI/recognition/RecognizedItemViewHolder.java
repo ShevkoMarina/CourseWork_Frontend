@@ -25,6 +25,6 @@ public class RecognizedItemViewHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onClick(View v) {
-        onRecognitionListener.onRecognizedItemClick(getAdapterPosition());
+
     }
 }

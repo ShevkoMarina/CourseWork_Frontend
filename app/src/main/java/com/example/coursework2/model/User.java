@@ -9,6 +9,11 @@ public class User {
     @SerializedName("password")
     private String password;
 
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public void setLogin(String login) {
         this.login = login;
     }

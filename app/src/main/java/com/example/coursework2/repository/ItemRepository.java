@@ -46,47 +46,31 @@ public class ItemRepository {
         return categoryItems;
     }
 
-    // Get saved items of user
-    public  void getUserItems(UUID userId) {
-
-        Call<List<Item>> call = NetworkService.getAPIService().getUserItems(userId);
-        call.enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if (response.isSuccessful() && response.body() != null) { // подумать
-                    itemsResponse.postValue(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
-
-            }
-        });
-    }
-
     // Get similar items
-    public void getSimilarItems(Collection<RecognizedImageRequest> items, String userId) {
+    public void getSimilarItems(Collection<RecognizedImageRequest> items, String userId, String token) {
 
-        Call<List<Item>> call = NetworkService.getAPIService().findSimilar(new FindSimilarRequest(items, userId));
+        Call<List<Item>> call = NetworkService.getAPIWithTokenService(token).findSimilar(new FindSimilarRequest(items, userId));
         call.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     similarItems.postValue(response.body());
                 }
+                else {
+                    similarItems.postValue(null);
+                }
             }
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-
+                similarItems.postValue(null);
             }
         });
     }
 
     // Save checkedItems
-    public void saveCheckedItems(List<Item> checkedItems) {
-        Call<Void> call = NetworkService.getAPIService().saveItems(checkedItems);
+    public void saveCheckedItems(List<Item> checkedItems, String token) {
+        Call<Void> call = NetworkService.getAPIWithTokenService(token).saveItems(checkedItems);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -102,8 +86,8 @@ public class ItemRepository {
         });
     }
 
-    public void getCategories(UUID userId) {
-        Call<List<CategoryItem>> call = NetworkService.getAPIService().getCategories(userId);
+    public void getCategories(UUID userId, String token) {
+        Call<List<CategoryItem>> call = NetworkService.getAPIWithTokenService(token).getCategories(userId);
         call.enqueue(new Callback<List<CategoryItem>>() {
             @Override
             public void onResponse(Call<List<CategoryItem>> call, Response<List<CategoryItem>> response) {
@@ -119,12 +103,12 @@ public class ItemRepository {
         });
     }
 
-    public void getItemsByCategory(UUID userId, String category) {
-        Call<List<Item>> call = NetworkService.getAPIService().getUserItemsByCategory(userId, category);
+    public void getItemsByCategory(UUID userId, String category, String token) {
+        Call<List<Item>> call = NetworkService.getAPIWithTokenService(token).getUserItemsByCategory(userId, category);
         call.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                if (response.isSuccessful() && response.body() != null) { // подумать
+                if (response.isSuccessful() && response.body() != null) {
                     itemsResponse.postValue(response.body());
                 }
             }

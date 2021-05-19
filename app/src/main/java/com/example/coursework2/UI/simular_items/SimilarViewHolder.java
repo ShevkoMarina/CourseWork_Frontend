@@ -29,6 +29,7 @@ public class SimilarViewHolder extends RecyclerView.ViewHolder implements View.O
         checkBox = itemView.findViewById(R.id.similar_check_box);
 
         checkBox.setOnClickListener(this);
+        itemView.setOnClickListener(this);
     }
 
     public void setOnSimilarItemListener(OnSimilarItemListener onSimilarItemListener) {
@@ -37,6 +38,11 @@ public class SimilarViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @Override
     public void onClick(View v) {
-        onSimilarItemListener.onSimilarItemClick(v, getAdapterPosition());
+        try {
+            CheckBox checkBox = (CheckBox)v;
+            onSimilarItemListener.onSimilarItemClick(v, getAdapterPosition());
+        } catch (Exception  ex) {
+            onSimilarItemListener.onWebClick(getAdapterPosition());
+        }
     }
 }

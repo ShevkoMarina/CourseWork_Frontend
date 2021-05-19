@@ -10,7 +10,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/furniture_item_card"
         android:layout_width="180dp"
-        android:layout_height="260dp"
+        android:layout_height="180dp"
         app:cardCornerRadius="25dp"
         tools:layout_editor_absoluteX="1dp">
 
@@ -22,8 +22,8 @@
             <ImageView
                 android:id="@+id/saved_image"
                 android:layout_width="match_parent"
-                android:layout_height="215dp"
-                android:scaleType="centerCrop"
+                android:layout_height="135dp"
+                android:scaleType="center"
                 android:src="@drawable/ic_launcher_background" />
 
             <TextView

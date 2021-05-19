@@ -1,5 +1,6 @@
 package com.example.coursework2.UI.simular_items;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.coursework2.R;
-import com.example.coursework2.UI.saved_items.FurnitureViewHolder;
 import com.example.coursework2.model.Item;
 
 import java.util.ArrayList;
@@ -18,17 +18,19 @@ import java.util.List;
 
 public class SimilarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
     private List<Item> mSimilarItems;
     private List<Item> checkedItems = new ArrayList<>();
     private OnSimilarItemListener onSimilarItemListener;
+    private Activity activity;
 
     public List<Item> getCheckedItems() {
         return checkedItems;
     }
 
-    public SimilarAdapter(OnSimilarItemListener onSimilarItemListener) {
+    public SimilarAdapter(List<Item> items, OnSimilarItemListener onSimilarItemListener, Activity activity) {
         this.onSimilarItemListener = onSimilarItemListener;
+        mSimilarItems = items;
+        this.activity = activity;
     }
 
     @NonNull
@@ -41,8 +43,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         ((SimilarViewHolder)holder).nameTV.setText(mSimilarItems.get(i).getName());
-        ((SimilarViewHolder)holder).priceTV.setText(mSimilarItems.get(i).getPrice());
-        ((SimilarViewHolder)holder).webTV.setText(mSimilarItems.get(i).getWebUrl());
+        ((SimilarViewHolder)holder).priceTV.setText(mSimilarItems.get(i).getPrice() + " РУБ");
 
         ((SimilarViewHolder)holder).setOnSimilarItemListener(new OnSimilarItemListener() {
             @Override
@@ -57,7 +58,7 @@ public class SimilarAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             @Override
             public void onWebClick(int position) {
-
+                mSimilarItems.get(position).openUrl(activity);
             }
         });
 

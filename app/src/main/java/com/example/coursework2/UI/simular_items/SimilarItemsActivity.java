@@ -11,14 +11,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.coursework2.R;
 import com.example.coursework2.UI.category_items.CategoryItemsActivity;
-import com.example.coursework2.UI.getphoto.GetPhotoActivity;
-import com.example.coursework2.UI.saved_items.FurnitureRecyclerView;
-import com.example.coursework2.UI.saved_items.ItemsListActivity;
-import com.example.coursework2.UI.saved_items.OnFurnitureListener;
-import com.example.coursework2.UI.saved_items_clicked.SavedItemsActivity;
+import com.example.coursework2.UI.saved_items.SavedItemsActivity;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizedItem;
 import com.example.coursework2.viewmodel.ItemsListViewModel;
@@ -33,41 +30,50 @@ public class SimilarItemsActivity extends AppCompatActivity implements OnSimilar
     private RecyclerView recyclerView;
     private SimilarAdapter adapter;
     private ItemsListViewModel itemsListViewModel;
-    private RecognizedItemsViewModel recognizedItemsViewModel;
-    private Button addBtn;
     private List<Item> checkedItems;
     private ProgressBar progressBar;
+    private TextView nothingFoundTV;
+    private List<Item> similarItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simular_items);
         itemsListViewModel = new ViewModelProvider(this, new ItemsListViewModelFactory(this)).get(ItemsListViewModel.class);
-        recognizedItemsViewModel = new ViewModelProvider(this, new RecognizedItemsViewModelFactory(this)).get(RecognizedItemsViewModel.class);
+        RecognizedItemsViewModel recognizedItemsViewModel = new ViewModelProvider(this, new RecognizedItemsViewModelFactory(this)).get(RecognizedItemsViewModel.class);
         recyclerView = findViewById(R.id.similar_recycler);
-        addBtn = findViewById(R.id.similar_save_btn);
+        Button addBtn = findViewById(R.id.similar_save_btn);
+        addBtn.setEnabled(false);
         progressBar = findViewById(R.id.similar_progress_bar);
+        nothingFoundTV = findViewById(R.id.nothing_found_tv);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkedItems = adapter.getCheckedItems();
-                if (checkedItems != null && checkedItems.size() != 0) {
+                if (checkedItems != null) {
                     itemsListViewModel.saveCheckedItems(checkedItems);
                     Intent i =new Intent(SimilarItemsActivity.this, CategoryItemsActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    finish();
                 }
             }
         });
 
-        // Observers
         itemsListViewModel.getSimilarItems().observe(this, new Observer<List<Item>>() {
             @Override
             public void onChanged(List<Item> items) {
+                progressBar.setVisibility(View.INVISIBLE);
                 if (items != null) {
-                    adapter.setmSimilarItems(items);
-                    progressBar.setVisibility(View.INVISIBLE);
+                    if (items.size() == 0) {
+                        nothingFoundTV.setVisibility(View.VISIBLE);
+                    } else {
+                        similarItems = items;
+                        addBtn.setEnabled(true);
+                        adapter.setmSimilarItems(items);
+                        nothingFoundTV.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
@@ -82,15 +88,14 @@ public class SimilarItemsActivity extends AppCompatActivity implements OnSimilar
     }
 
     private void ConfigureRecyclerView() {
-        // Liva data can't be passed via the constructor
-        adapter = new SimilarAdapter(this);
+        adapter = new SimilarAdapter(similarItems, this, SimilarItemsActivity.this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
     @Override
     public void onSimilarItemClick(View v, int position) {
-
+        similarItems.get(position).openUrl(SimilarItemsActivity.this);
     }
 
     @Override

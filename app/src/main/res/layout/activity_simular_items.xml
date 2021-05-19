@@ -7,6 +7,22 @@
     android:background="@drawable/gradient_background"
     android:layout_height="match_parent">
 
+
+
+    <TextView
+        android:id="@+id/nothing_found_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ничего не найдено"
+        android:visibility="invisible"
+        android:textColor="@android:color/white"
+        android:fontFamily="sans-serif-thin"
+        android:textSize="20dp"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ProgressBar
         android:id="@+id/similar_progress_bar"
         style="?android:attr/progressBarStyle"
@@ -23,19 +39,32 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="Похожие предметы" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/similar_recycler"
             android:layout_width="match_parent"
+            android:layout_marginHorizontal="20dp"
             android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="25" />
 
         <Button
             android:id="@+id/similar_save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
+            android:background="@drawable/rounded_filled_btn"
             android:text="Добавить" />
 
     </LinearLayout>

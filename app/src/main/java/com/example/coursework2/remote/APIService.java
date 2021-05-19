@@ -1,5 +1,6 @@
 package com.example.coursework2.remote;
 
+import com.example.coursework2.model.AuthUserResponse;
 import com.example.coursework2.model.CategoryItem;
 import com.example.coursework2.model.FindSimilarRequest;
 import com.example.coursework2.model.Item;
@@ -66,4 +67,8 @@ public interface APIService {
     @Headers("Content-type: application/json")
     @GET("/SavedItems/GetUserItemsByCategory")
     Call<List<Item>> getUserItemsByCategory(@Query("userId") UUID userId, @Query("category") String category);
+
+    @Headers("Content-type: application/json")
+    @POST("/Security")
+    Call<AuthUserResponse> getToken(@Body User user);
 }

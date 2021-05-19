@@ -12,13 +12,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.coursework2.R;
 import com.example.coursework2.UI.getphoto.GetPhotoActivity;
-import com.example.coursework2.UI.saved_items_clicked.SavedItemsActivity;
-import com.example.coursework2.UI.saved_items_clicked.SavedItemsAdapter;
+import com.example.coursework2.UI.saved_items.SavedItemsActivity;
 import com.example.coursework2.model.CategoryItem;
-import com.example.coursework2.model.Item;
 import com.example.coursework2.viewmodel.ItemsListViewModel;
 import com.example.coursework2.viewmodel.ItemsListViewModelFactory;
 
@@ -27,34 +26,34 @@ import java.util.List;
 
 public class CategoryItemsActivity extends AppCompatActivity implements CategoryItemsAdapter.OnCategoryListener {
 
-    private RecyclerView recyclerView;
     private CategoryItemsAdapter adapter;
-    private SharedPreferences sp;
-    private SharedPreferences.Editor editor;
-    private Button addBtn;
-
-    // ViewModel
-    private ItemsListViewModel itemsListViewModel;
-
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_items);
+        ItemsListViewModel itemsListViewModel = new ViewModelProvider(this, new ItemsListViewModelFactory(this)).get(ItemsListViewModel.class);
 
-        // Bind View Model
-        itemsListViewModel = new ViewModelProvider(this, new ItemsListViewModelFactory(this)).get(ItemsListViewModel.class);
-
-        recyclerView = findViewById(R.id.category_rv);
-        addBtn = findViewById(R.id.category_add_btn);
+        RecyclerView recyclerView = findViewById(R.id.category_rv);
+        Button addBtn = findViewById(R.id.category_add_btn);
+        TextView nothingCat = findViewById(R.id.nothing_cat_tv);
 
         itemsListViewModel.getCategoryItems().observe(this, new Observer<List<CategoryItem>>() {
             @Override
             public void onChanged(List<CategoryItem> items) {
                 if (items != null) {
-                    categoryItems = items;
-                    adapter.setCategoryItems(items);
+                    if (items.size() != 0) {
+                        nothingCat.setVisibility(View.INVISIBLE);
+                        categoryItems = items;
+                        adapter.setCategoryItems(items);
+                    }
+                    else {
+                        nothingCat.setVisibility(View.VISIBLE);
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    nothingCat.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -75,16 +74,12 @@ public class CategoryItemsActivity extends AppCompatActivity implements Category
 
     @Override
     public void onCategoryItemClick(int position) {
-        // записать в shared prefs категорию. и взять ее на новой странице
-
-        sp = getSharedPreferences("UserData", Context.MODE_PRIVATE);
-        editor = sp.edit();
+        SharedPreferences sp = getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
         editor.putString("category", categoryItems.get(position).getCategory());
         editor.apply();
 
         Intent intent = new Intent(CategoryItemsActivity.this, SavedItemsActivity.class);
         startActivity(intent);
     }
-
-    
 }

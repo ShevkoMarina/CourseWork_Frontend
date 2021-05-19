@@ -1,4 +1,4 @@
-package com.example.coursework2.UI.saved_items_clicked;
+package com.example.coursework2.UI.saved_items;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.coursework2.R;
-import com.example.coursework2.UI.recognition.RecognizedItemViewHolder;
-import com.example.coursework2.UI.saved_items.FurnitureViewHolder;
 import com.example.coursework2.model.Item;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SavedItemsAdapter  extends  RecyclerView.Adapter<SavedItemsAdapter.SavedItemsViewHolder>{
@@ -48,8 +45,7 @@ public class SavedItemsAdapter  extends  RecyclerView.Adapter<SavedItemsAdapter.
     @Override
     public void onBindViewHolder(@NonNull SavedItemsViewHolder holder, int i) {
         ((SavedItemsViewHolder)holder).nameTV.setText(savedItems.get(i).getName());
-        ((SavedItemsViewHolder)holder).priceTV.setText(savedItems.get(i).getPrice());
-     //   ((SavedItemsViewHolder)holder).webTV.setText(savedItems.get(i).getWebUrl());
+        ((SavedItemsViewHolder)holder).priceTV.setText(savedItems.get(i).getPrice() + " РУБ");
 
         // ImageView
         Glide.with(holder.itemView.getContext())

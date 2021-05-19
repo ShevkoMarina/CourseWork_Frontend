@@ -6,5 +6,7 @@
     <color name="colorPink">#d8c2ff</color>
     <color name="colorTintedPink">#b88fff</color>
     <color name="trans_pink">#D9b88fff</color>
-    <color name="trans_white">#AAFFFFFF</color>
+    <color name="trans_white">#DDFFFFFF</color>
+    <color name="dark_violet">#3f1681</color>
+    <color name="dark_blue">#157ba9</color>
 </resources>

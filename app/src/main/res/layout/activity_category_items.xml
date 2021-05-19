@@ -7,13 +7,29 @@
     android:background="@drawable/gradient_background"
     tools:context=".UI.category_items.CategoryItemsActivity">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/category_rv"
-        android:layout_margin="10dp"
-        android:foregroundGravity="center_horizontal"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:textSize="25dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Избранные категории" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/category_rv"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:foregroundGravity="center_horizontal" />
 
     <Button
         android:id="@+id/category_add_btn"
@@ -22,10 +38,27 @@
         android:text="Добавить"
         android:background="@drawable/button_semitrans"
         android:width="300dp"
+        android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/category_rv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.965" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/nothing_cat_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-thin"
+        android:text="Пока тут пусто"
+        android:visibility="invisible"
+        android:textColor="@android:color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424" />
 </androidx.constraintlayout.widget.ConstraintLayout>
