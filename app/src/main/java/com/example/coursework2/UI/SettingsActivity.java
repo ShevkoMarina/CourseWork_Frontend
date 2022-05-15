@@ -47,9 +47,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (yandexChecked)
             return SearchSettings.Yandex;
 
-        if (googleChecked)
-            return SearchSettings.Google;
-
-        return SearchSettings.Undefined;
+        return SearchSettings.Google;
     }
 }
