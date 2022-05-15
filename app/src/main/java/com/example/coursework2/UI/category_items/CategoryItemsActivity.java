@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.coursework2.R;
+import com.example.coursework2.UI.SettingsActivity;
 import com.example.coursework2.UI.getphoto.GetPhotoActivity;
 import com.example.coursework2.UI.saved_items.SavedItemsActivity;
 import com.example.coursework2.model.CategoryItem;
@@ -38,6 +39,7 @@ public class CategoryItemsActivity extends AppCompatActivity implements Category
         RecyclerView recyclerView = findViewById(R.id.category_rv);
         Button addBtn = findViewById(R.id.category_add_btn);
         TextView nothingCat = findViewById(R.id.nothing_cat_tv);
+        Button settingsBtn = findViewById(R.id.setting_btn);
 
         itemsListViewModel.getCategoryItems().observe(this, new Observer<List<CategoryItem>>() {
             @Override
@@ -61,6 +63,15 @@ public class CategoryItemsActivity extends AppCompatActivity implements Category
         adapter = new CategoryItemsAdapter(categoryItems, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+
+        settingsBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(CategoryItemsActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -58,7 +58,7 @@ public class ItemsListViewModel extends ViewModel {
         sp = activity.getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String userId = sp.getString("userid", "");
         String token =  sp.getString("token", "");
-        String searchSettings = sp.getString("searchSettings", "");
+        String searchSettings = sp.getString("searchSettings", "Yandex");
 
         Collection<RecognizedImageRequest> items = new ArrayList<>();
         for (int i = 0; i < croppedImages.size(); i++)  {
