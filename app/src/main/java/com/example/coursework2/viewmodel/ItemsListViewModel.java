@@ -13,6 +13,7 @@ import com.example.coursework2.model.CategoryItem;
 import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizedImageRequest;
 import com.example.coursework2.model.RecognizedItem;
+import com.example.coursework2.model.SearchSettings;
 import com.example.coursework2.repository.ItemRepository;
 import com.example.coursework2.utils.ConnectionDetector;
 
@@ -57,6 +58,7 @@ public class ItemsListViewModel extends ViewModel {
         sp = activity.getSharedPreferences("UserData", Context.MODE_PRIVATE);
         String userId = sp.getString("userid", "");
         String token =  sp.getString("token", "");
+        String searchSettings = sp.getString("searchSettings", "");
 
         Collection<RecognizedImageRequest> items = new ArrayList<>();
         for (int i = 0; i < croppedImages.size(); i++)  {
@@ -64,7 +66,7 @@ public class ItemsListViewModel extends ViewModel {
         }
 
         if (detector.isConnected()) {
-            itemRepository.getSimilarItems(items, userId, token);
+            itemRepository.getSimilarItems(items, userId, token, Enum.valueOf(SearchSettings.class, searchSettings));
         }
         else {
             Toast.makeText(activity, "Нет интернет соединения!", Toast.LENGTH_LONG).show();

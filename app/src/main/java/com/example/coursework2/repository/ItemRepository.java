@@ -9,6 +9,7 @@ import com.example.coursework2.model.Item;
 import com.example.coursework2.model.RecognizedImageRequest;
 import com.example.coursework2.model.RecognizedItem;
 import com.example.coursework2.model.SaveItemsRequest;
+import com.example.coursework2.model.SearchSettings;
 import com.example.coursework2.remote.NetworkService;
 
 import java.util.Collection;
@@ -47,9 +48,9 @@ public class ItemRepository {
     }
 
     // Get similar items
-    public void getSimilarItems(Collection<RecognizedImageRequest> items, String userId, String token) {
+    public void getSimilarItems(Collection<RecognizedImageRequest> items, String userId, String token, SearchSettings searchSettings) {
 
-        Call<List<Item>> call = NetworkService.getAPIWithTokenService(token).findSimilar(new FindSimilarRequest(items, userId));
+        Call<List<Item>> call = NetworkService.getAPIWithTokenService(token).findSimilar(new FindSimilarRequest(items, userId, searchSettings));
         call.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {

@@ -8,9 +8,12 @@ public class FindSimilarRequest {
 
     private String UserId;
 
-    public FindSimilarRequest(Collection<RecognizedImageRequest> items, String userId) {
+    private SearchSettings searchSettings;
+
+    public FindSimilarRequest(Collection<RecognizedImageRequest> items, String userId, SearchSettings searchSettings) {
         this.items = items;
         this.UserId = userId;
+        this.searchSettings = searchSettings;
     }
 
     public Collection<RecognizedImageRequest> getItems() {
@@ -20,4 +23,6 @@ public class FindSimilarRequest {
     public String getUserId() {
         return UserId;
     }
+
+    public SearchSettings getSearchSettings() {return searchSettings; }
 }

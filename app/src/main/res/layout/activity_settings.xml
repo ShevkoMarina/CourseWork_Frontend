@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".UI.SettingsActivity"
     android:background="@drawable/gradient_background">
 
     <TextView
@@ -52,6 +53,7 @@
                 android:buttonTint="@android:color/white"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@android:color/white"
+                android:checked="true"
                 android:text="Яндекс" />
 
             <CheckBox
