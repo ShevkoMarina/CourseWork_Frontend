@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: tk.jamun.ui:gallery:0.0.1@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/10518ad788b213c2f246f7d7097d8ab0/jetified-gallery-0.0.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9268e867910577017793827eac22bd7e/jetified-gallery-0.0.1/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9268e867910577017793827eac22bd7e/jetified-gallery-0.0.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/9268e867910577017793827eac22bd7e/jetified-gallery-0.0.1/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tk.jamun.ui/gallery/0.0.1/2b3680ca02c87141d59f04529ac45212d2199bab/gallery-0.0.1-javadoc.jar!/" />
